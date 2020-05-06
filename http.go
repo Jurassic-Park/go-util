@@ -62,3 +62,4 @@ func Post(url string, data []byte, contentType string) (statusCode int, respBody
 	result, _ := ioutil.ReadAll(resp.Body)
 	return resp.StatusCode, result
 }
+
