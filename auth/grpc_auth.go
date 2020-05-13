@@ -10,7 +10,8 @@ import (
 // TokenInfo 用户信息
 type TokenInfo struct {
 	ID    string
-	Roles []string
+	Role  string
+	Platform string
 }
 
 // AuthInterceptor 认证拦截器，对以authorization为头部，形式为`bearer token`的Token进行验证
@@ -34,7 +35,6 @@ func parseToken(token string) (TokenInfo, error) {
 	var tokenInfo TokenInfo
 	if token == "grpc.auth.token" {
 		tokenInfo.ID = "1"
-		tokenInfo.Roles = []string{"admin"}
 		return tokenInfo, nil
 	}
 	return tokenInfo, status.Errorf(codes.Unauthenticated, "Token无效: bearer "+token)
