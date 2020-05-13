@@ -1,4 +1,4 @@
-package options
+package grpc
 
 import (
 	"google.golang.org/grpc"
@@ -6,12 +6,12 @@ import (
 	"log"
 )
 
-type Option struct {
+type Server struct {
 	CertPemPath string
 	CertKeyPath string
 }
 
-func (o *Option) Get() *grpc.Server {
+func (o *Server) Get() *grpc.Server {
 	// grpc server
 	creds, err := credentials.NewServerTLSFromFile(o.CertPemPath, o.CertKeyPath)
 	if err != nil {

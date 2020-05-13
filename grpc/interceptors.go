@@ -1,4 +1,4 @@
-package options
+package grpc
 
 import (
 	"github.com/Jurassic-Park/go-util/auth"
