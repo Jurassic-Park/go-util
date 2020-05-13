@@ -11,6 +11,7 @@ type Server struct {
 	CertKeyPath string
 }
 
+// Get is get grpc server
 func (o *Server) Get() *grpc.Server {
 	// grpc server
 	creds, err := credentials.NewServerTLSFromFile(o.CertPemPath, o.CertKeyPath)
