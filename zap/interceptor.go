@@ -2,28 +2,33 @@ package zap
 
 import (
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
-	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"log"
 )
 
 // ZapInterceptor 返回zap.logger实例(把日志写到文件中)
 func ZapInterceptor() *zap.Logger {
-	w := zapcore.AddSync(&lumberjack.Logger{
-		Filename:  "log/debug.log",
-		MaxSize:   1024, //MB
-		LocalTime: true,
-	})
+	// w := zapcore.AddSync(&lumberjack.Logger{
+	// 	Filename:  "log/debug.log",
+	// 	MaxSize:   1024, //MB
+	// 	LocalTime: true,
+	// })
 
-	config := zap.NewProductionEncoderConfig()
-	config.EncodeTime = zapcore.ISO8601TimeEncoder
-	core := zapcore.NewCore(
-		zapcore.NewJSONEncoder(config),
-		w,
-		zap.NewAtomicLevel(),
-	)
+	// config := zap.NewProductionEncoderConfig()
+	// config.EncodeTime = zapcore.ISO8601TimeEncoder
+	// core := zapcore.NewCore(
+	// 	zapcore.NewJSONEncoder(config),
+	// 	w,
+	// 	zap.NewAtomicLevel(),
+	// )
 
-	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
+	// logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
+	// grpc_zap.ReplaceGrpcLogger(logger)
+	// return logger
+	logger, err := zap.NewDevelopment()
+	if err != nil {
+		log.Fatalf("failed to initialize zap logger: %v", err)
+	}
 	grpc_zap.ReplaceGrpcLogger(logger)
 	return logger
 }
